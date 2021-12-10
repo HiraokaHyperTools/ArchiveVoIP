@@ -17,15 +17,17 @@ program
             files.forEach(fileName => {
                 const filePath = path.join(dir, fileName);
                 const stat = fs.statSync(filePath);
-                const fileLastModifiedYear = moment(stat.mtime).year();
-                if (thisYear !== fileLastModifiedYear) {
-                    const archiveDir = path.join(dir, `${fileLastModifiedYear}`);
-                    mkdirp.sync(archiveDir);
-                    fs.renameSync(
-                        filePath,
-                        path.join(archiveDir, fileName)
-                    );
-                    ++movedCount;
+                if (stat.isFile()) {
+                    const fileLastModifiedYear = moment(stat.mtime).year();
+                    if (thisYear !== fileLastModifiedYear) {
+                        const archiveDir = path.join(dir, `${fileLastModifiedYear}`);
+                        mkdirp.sync(archiveDir);
+                        fs.renameSync(
+                            filePath,
+                            path.join(archiveDir, fileName)
+                        );
+                        ++movedCount;
+                    }
                 }
             });
             console.info(`${movedCount} files archived.`);
