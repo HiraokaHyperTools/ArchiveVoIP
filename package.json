@@ -8,6 +8,6 @@
   "dependencies": {
     "commander": "^9.1.0",
     "mkdirp": "^1.0.4",
-    "moment": "^2.29.2"
+    "moment": "^2.29.4"
   }
 }
