@@ -1,7 +1,7 @@
 const program = require('commander');
 const fs = require('fs');
 const path = require('path');
-const moment = require('moment');
+const dayjs = require('dayjs');
 const mkdirp = require('mkdirp');
 
 program
@@ -13,12 +13,12 @@ program
             }
             let movedCount = 0;
             console.info(`${files.length} files found.`);
-            const thisYear = moment().year();
+            const thisYear = dayjs().year();
             files.forEach(fileName => {
                 const filePath = path.join(dir, fileName);
                 const stat = fs.statSync(filePath);
                 if (stat.isFile()) {
-                    const fileLastModifiedYear = moment(stat.mtime).year();
+                    const fileLastModifiedYear = dayjs(stat.mtime).year();
                     if (thisYear !== fileLastModifiedYear) {
                         const archiveDir = path.join(dir, `${fileLastModifiedYear}`);
                         mkdirp.sync(archiveDir);
